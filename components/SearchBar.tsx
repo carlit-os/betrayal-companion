@@ -1,17 +1,14 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Suspense } from "react";
 
 interface SearchBarProps {
   placeholder?: string;
   basePath: string;
 }
 
-export default function SearchBar({
-  placeholder = "Search...",
-  basePath,
-}: SearchBarProps) {
+function SearchInput({ placeholder, basePath }: SearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
@@ -39,5 +36,22 @@ export default function SearchBar({
       placeholder={placeholder}
       className="w-full rounded-lg border border-stone-800 bg-stone-900/50 px-3.5 py-2 text-sm text-stone-200 placeholder-stone-600 transition focus:border-stone-600 focus:outline-none"
     />
+  );
+}
+
+export default function SearchBar(props: SearchBarProps) {
+  return (
+    <Suspense
+      fallback={
+        <input
+          type="text"
+          disabled
+          placeholder={props.placeholder}
+          className="w-full rounded-lg border border-stone-800 bg-stone-900/50 px-3.5 py-2 text-sm text-stone-200 placeholder-stone-600"
+        />
+      }
+    >
+      <SearchInput {...props} />
+    </Suspense>
   );
 }

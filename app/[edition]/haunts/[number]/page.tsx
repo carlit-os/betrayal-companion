@@ -5,6 +5,11 @@ import { eq, and } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import DiceRoller from "../../../../components/DiceRoller";
 
+export async function generateStaticParams() {
+  const allHaunts = await db.select({ editionId: haunts.editionId, number: haunts.number }).from(haunts);
+  return allHaunts.map((h) => ({ edition: h.editionId, number: String(h.number) }));
+}
+
 export default async function HauntDetailPage({
   params,
 }: {

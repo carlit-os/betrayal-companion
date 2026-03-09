@@ -1,10 +1,16 @@
 import Link from "next/link";
 
-const editionMeta: Record<string, string> = {
-  original: "Original (2004)",
-  "widows-walk": "Widow's Walk (2016)",
-  legacy: "Betrayal Legacy (2018)",
-  "3rd-edition": "3rd Edition (2022)",
+const editionIds = ["original", "widows-walk", "legacy", "3rd-edition"];
+
+export function generateStaticParams() {
+  return editionIds.map((edition) => ({ edition }));
+}
+
+const editionMeta: Record<string, { name: string; accent: string; dot: string }> = {
+  original: { name: "Original (2004)", accent: "text-red-400", dot: "bg-red-500" },
+  "widows-walk": { name: "Widow's Walk (2016)", accent: "text-violet-400", dot: "bg-violet-500" },
+  legacy: { name: "Betrayal Legacy (2018)", accent: "text-amber-400", dot: "bg-amber-500" },
+  "3rd-edition": { name: "3rd Edition (2022)", accent: "text-emerald-400", dot: "bg-emerald-500" },
 };
 
 export default async function EditionLayout({
@@ -15,7 +21,7 @@ export default async function EditionLayout({
   params: Promise<{ edition: string }>;
 }) {
   const { edition } = await params;
-  const name = editionMeta[edition] || edition;
+  const meta = editionMeta[edition] || { name: edition, accent: "text-stone-400", dot: "bg-stone-500" };
 
   const tabs = [
     { label: "Haunts", href: `/${edition}/haunts` },
@@ -31,9 +37,12 @@ export default async function EditionLayout({
         >
           &larr; Editions
         </Link>
-        <h1 className="mt-1.5 text-xl font-semibold text-stone-200">
-          {name}
-        </h1>
+        <div className="mt-1.5 flex items-center gap-2">
+          <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
+          <h1 className={`text-xl font-semibold ${meta.accent}`}>
+            {meta.name}
+          </h1>
+        </div>
       </div>
 
       <div className="mb-6 flex gap-0.5 border-b border-stone-800">
