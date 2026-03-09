@@ -3,37 +3,35 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-blood: #7f1d1d;
-  --color-blood-light: #991b1b;
-  --color-haunt: #1c1917;
 }
 
 body {
-  background-color: #faf9f7;
-}
-
-/* Haunted house vibe for the header */
-.nav-brand {
-  letter-spacing: -0.025em;
+  background-color: #0c0a09;
+  color: #e7e5e4;
 }
 
 /* Smooth page transitions */
 main {
-  animation: fadeIn 0.2s ease-out;
+  animation: fadeIn 0.15s ease-out;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Dice roll animation */
 @keyframes shake {
   0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-8deg); }
-  75% { transform: rotate(8deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
 }
 
 .dice-rolling {
-  animation: shake 0.15s ease-in-out 2;
+  animation: shake 0.12s ease-in-out 3;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(239, 68, 68, 0.3);
 }

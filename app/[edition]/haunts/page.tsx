@@ -42,26 +42,26 @@ export default async function HauntsPage({
       </div>
 
       {allHaunts.length === 0 ? (
-        <div className="rounded-xl border border-stone-200 bg-white py-16 text-center">
-          <p className="text-stone-400">
-            {q ? "No haunts match your search." : "No haunts found for this edition."}
+        <div className="rounded-lg border border-stone-800 bg-stone-900/50 py-16 text-center">
+          <p className="text-stone-500">
+            {q ? `No haunts matching "${q}".` : "No haunts for this edition yet."}
           </p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-lg border border-stone-800">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-stone-100 bg-stone-50/50">
-                <th className="w-14 px-4 py-3 text-left font-medium text-stone-500">
+              <tr className="border-b border-stone-800 bg-stone-900/80">
+                <th className="w-14 px-4 py-2.5 text-left text-xs font-medium text-stone-500">
                   #
                 </th>
-                <th className="px-4 py-3 text-left font-medium text-stone-500">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-stone-500">
                   Name
                 </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-stone-500 sm:table-cell">
+                <th className="hidden px-4 py-2.5 text-left text-xs font-medium text-stone-500 sm:table-cell">
                   Omen
                 </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-stone-500 sm:table-cell">
+                <th className="hidden px-4 py-2.5 text-left text-xs font-medium text-stone-500 sm:table-cell">
                   Room
                 </th>
               </tr>
@@ -70,33 +70,29 @@ export default async function HauntsPage({
               {allHaunts.map((haunt, i) => (
                 <tr
                   key={haunt.id}
-                  className={`group transition hover:bg-red-50/40 ${i < allHaunts.length - 1 ? "border-b border-stone-100" : ""}`}
+                  className={`group transition hover:bg-stone-800/50 ${i < allHaunts.length - 1 ? "border-b border-stone-800/50" : ""}`}
                 >
-                  <td className="px-4 py-3 font-mono text-xs text-stone-400">
+                  <td className="px-4 py-2.5 font-mono text-xs text-stone-600">
                     {haunt.number}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2.5">
                     <Link
                       href={`/${edition}/haunts/${haunt.number}`}
-                      className="font-medium text-stone-900 transition group-hover:text-red-800"
+                      className="text-stone-300 transition group-hover:text-stone-100"
                     >
                       {haunt.name}
                     </Link>
-                    <div className="mt-0.5 text-xs text-stone-400 sm:hidden">
+                    <div className="mt-0.5 text-xs text-stone-600 sm:hidden">
                       {[haunt.omenTrigger, haunt.roomTrigger]
                         .filter(Boolean)
                         .join(" / ") || "—"}
                     </div>
                   </td>
-                  <td className="hidden px-4 py-3 text-stone-500 sm:table-cell">
-                    {haunt.omenTrigger || (
-                      <span className="text-stone-300">—</span>
-                    )}
+                  <td className="hidden px-4 py-2.5 text-stone-500 sm:table-cell">
+                    {haunt.omenTrigger || <span className="text-stone-700">—</span>}
                   </td>
-                  <td className="hidden px-4 py-3 text-stone-500 sm:table-cell">
-                    {haunt.roomTrigger || (
-                      <span className="text-stone-300">—</span>
-                    )}
+                  <td className="hidden px-4 py-2.5 text-stone-500 sm:table-cell">
+                    {haunt.roomTrigger || <span className="text-stone-700">—</span>}
                   </td>
                 </tr>
               ))}
@@ -105,7 +101,7 @@ export default async function HauntsPage({
         </div>
       )}
 
-      <p className="mt-3 text-center text-xs text-stone-400">
+      <p className="mt-3 text-center text-xs text-stone-600">
         {allHaunts.length} haunt{allHaunts.length !== 1 ? "s" : ""}
       </p>
     </div>

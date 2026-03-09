@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Betrayal Companion",
   description:
-    "The definitive companion app for Betrayal at House on the Hill — haunt lookup, rulings, and dice roller.",
+    "Haunt lookup, edge case rulings, and dice roller for Betrayal at House on the Hill.",
 };
 
 export default function RootLayout({
@@ -25,28 +25,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
       >
-        <nav className="sticky top-0 z-50 border-b border-stone-200 bg-stone-900 shadow-sm">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+        <nav className="sticky top-0 z-50 border-b border-stone-800/60 bg-stone-950/80 backdrop-blur-md">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3.5">
             <Link
               href="/"
-              className="nav-brand text-lg font-bold tracking-tight text-stone-100"
+              className="text-base font-semibold tracking-tight text-stone-200"
             >
-              <span className="text-red-500">B</span>etrayal Companion
+              Betrayal Companion
             </Link>
-            <div className="flex gap-5 text-sm font-medium">
+            <div className="flex gap-6 text-sm">
               <Link
                 href="/original/haunts"
-                className="text-stone-400 transition hover:text-stone-100"
+                className="text-stone-500 transition hover:text-stone-200"
               >
                 Haunts
               </Link>
               <Link
                 href="/original/rulings"
-                className="text-stone-400 transition hover:text-stone-100"
+                className="text-stone-500 transition hover:text-stone-200"
               >
                 Rulings
               </Link>
@@ -54,7 +54,7 @@ export default function RootLayout({
           </div>
         </nav>
         <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
-        <footer className="border-t border-stone-200 py-6 text-center text-xs text-stone-400">
+        <footer className="border-t border-stone-800/40 py-8 text-center text-xs text-stone-600">
           Fan project. Not affiliated with Avalon Hill or Hasbro.
         </footer>
       </body>

@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-const editionMeta: Record<string, { name: string; color: string }> = {
-  original: { name: "Original (2004)", color: "text-red-700" },
-  "widows-walk": { name: "Widow's Walk (2016)", color: "text-purple-700" },
-  legacy: { name: "Betrayal Legacy (2018)", color: "text-amber-700" },
-  "3rd-edition": { name: "3rd Edition (2022)", color: "text-emerald-700" },
+const editionMeta: Record<string, string> = {
+  original: "Original (2004)",
+  "widows-walk": "Widow's Walk (2016)",
+  legacy: "Betrayal Legacy (2018)",
+  "3rd-edition": "3rd Edition (2022)",
 };
 
 export default async function EditionLayout({
@@ -15,10 +15,7 @@ export default async function EditionLayout({
   params: Promise<{ edition: string }>;
 }) {
   const { edition } = await params;
-  const meta = editionMeta[edition] || {
-    name: edition,
-    color: "text-stone-700",
-  };
+  const name = editionMeta[edition] || edition;
 
   const tabs = [
     { label: "Haunts", href: `/${edition}/haunts` },
@@ -27,24 +24,24 @@ export default async function EditionLayout({
 
   return (
     <div>
-      <div className="mb-6">
+      <div className="mb-5">
         <Link
           href="/"
-          className="text-sm text-stone-400 transition hover:text-stone-600"
+          className="text-xs text-stone-600 transition hover:text-stone-400"
         >
-          &larr; All editions
+          &larr; Editions
         </Link>
-        <h1 className={`mt-1 text-2xl font-bold ${meta.color}`}>
-          {meta.name}
+        <h1 className="mt-1.5 text-xl font-semibold text-stone-200">
+          {name}
         </h1>
       </div>
 
-      <div className="mb-6 flex gap-1 border-b border-stone-200">
+      <div className="mb-6 flex gap-0.5 border-b border-stone-800">
         {tabs.map((tab) => (
           <Link
             key={tab.href}
             href={tab.href}
-            className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-stone-500 transition hover:border-stone-400 hover:text-stone-800"
+            className="border-b-2 border-transparent px-4 py-2 text-sm text-stone-500 transition hover:border-stone-600 hover:text-stone-300"
           >
             {tab.label}
           </Link>

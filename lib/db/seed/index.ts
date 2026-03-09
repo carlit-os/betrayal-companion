@@ -7,11 +7,16 @@ import { charactersSeed } from "./characters";
 import { roomsSeed } from "./rooms";
 import { itemsSeed } from "./items";
 import { hauntsSeed } from "./haunts";
+import { hauntsLegacySeed } from "./haunts-legacy";
+import { haunts3rdEditionSeed } from "./haunts-3rd-edition";
 import { rulingsSeed } from "./rulings";
+
+import { hauntsWidowsWalkSeed } from "./haunts-widows-walk";
 
 const dbPath = path.join(process.cwd(), "local.db");
 const sqlite = new Database(dbPath);
 sqlite.pragma("journal_mode = WAL");
+sqlite.pragma("foreign_keys = OFF");
 const db = drizzle(sqlite, { schema });
 
 async function seed() {
@@ -22,10 +27,7 @@ async function seed() {
 
   console.log("Seeding characters...");
   for (const char of charactersSeed) {
-    await db
-      .insert(schema.characters)
-      .values({ ...char, speed: char.speed, might: char.might, sanity: char.sanity, knowledge: char.knowledge })
-      .onConflictDoNothing();
+    await db.insert(schema.characters).values(char).onConflictDoNothing();
   }
 
   console.log("Seeding rooms...");
@@ -38,12 +40,19 @@ async function seed() {
     await db.insert(schema.items).values(item).onConflictDoNothing();
   }
 
-  console.log("Seeding haunts...");
-  for (const haunt of hauntsSeed) {
+  const allHaunts = [
+    ...hauntsSeed,
+    ...hauntsWidowsWalkSeed,
+    ...hauntsLegacySeed,
+    ...haunts3rdEditionSeed,
+  ];
+
+  console.log(`Seeding ${allHaunts.length} haunts across all editions...`);
+  for (const haunt of allHaunts) {
     await db.insert(schema.haunts).values(haunt).onConflictDoNothing();
   }
 
-  console.log("Seeding rulings...");
+  console.log(`Seeding ${rulingsSeed.length} rulings...`);
   for (const ruling of rulingsSeed) {
     await db
       .insert(schema.rulings)
